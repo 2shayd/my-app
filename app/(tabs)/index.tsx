@@ -1,29 +1,36 @@
-import { Image, StyleSheet, Platform } from 'react-native';
+import { Image, StyleSheet, ScrollView, Platform, FlatList } from 'react-native';
 
 
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
+import entries from '../../data/entries.json';
 
 export default function HomeScreen() {
+  const entryData = entries
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
+    <ScrollView style={styles.container}>
       <ThemedView style={styles.titleContainer}>
-        <ThemedText type="subtitle">My First App!</ThemedText>
+      <ThemedText type="subtitle">Migraine Diary</ThemedText>
+      <FlatList
+        data = {entries}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={({ item }) => (
+          <ThemedView style={styles.stepContainer}>
+            <ThemedText type="title">{item.title}</ThemedText>
+          </ThemedView>  
+        )}
+      />
       </ThemedView>
-      
-    </ParallaxScrollView>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 14,
+  },
   titleContainer: {
     flexDirection: 'row',
     alignItems: 'center',

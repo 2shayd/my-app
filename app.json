@@ -1,6 +1,8 @@
 {
   "expo": {
     "name": "my-app",
+    "githubUrl": "https://github.com/2shayd/my-app.git",
+    "owner": "2shayd",
     "slug": "my-app",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -9,18 +11,13 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": false
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       }
-    },
-    "web": {
-      "bundler": "metro",
-      "output": "static",
-      "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
       "expo-router",
