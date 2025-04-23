@@ -5,6 +5,7 @@ import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import entries from '../../data/entries.json';
+import { Card } from '../../components/Card';
 
 export default function HomeScreen() {
   const entryData = entries
@@ -16,15 +17,21 @@ export default function HomeScreen() {
         data = {entries}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
-          <ThemedView style={styles.stepContainer}>
-            <ThemedText type="title">{item.title}</ThemedText>
-          </ThemedView>  
+          <Card
+            id={item.id}
+            title={item.title}
+            content={item.content}
+            created_at={item.created_at}
+            updated_at={item.updated_at}
+          />
         )}
       />
       </ThemedView>
     </ScrollView>
   );
 }
+
+
 
 const styles = StyleSheet.create({
   container: {
