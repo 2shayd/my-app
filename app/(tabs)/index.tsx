@@ -1,7 +1,7 @@
 import { StyleSheet, ScrollView, FlatList, TextInput } from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
 import entries from '../../data/entries.json';
-import { Card } from '../../components/Card';
+import { Card } from '../../components/ui/card';
 import { useState } from 'react';
 import { useThemeColor } from '@/hooks/useThemeColor';
 
