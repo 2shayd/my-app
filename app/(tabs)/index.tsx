@@ -8,6 +8,13 @@ import entries from '../../data/entries.json';
 import { Card } from '../../components/Card';
 
 export default function HomeScreen() {
+  //const [searchQuery, setSearchQuery] = useState('');
+  //const[filteredData, setFilteredData] = useState(entryData);
+  //const handleSearch = (query: string) => {
+  //setSearchQuery(query);
+  //const filtered = entryData.filter((item) =>
+  //item. )
+  //}
   const entryData = entries
   return (
     <ScrollView style={styles.container}>
