@@ -1,64 +1,60 @@
-import { Image, StyleSheet, ScrollView, Platform, FlatList } from 'react-native';
-
-
-import ParallaxScrollView from '@/components/ParallaxScrollView';
+import { StyleSheet, ScrollView, FlatList, TextInput } from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
 import entries from '../../data/entries.json';
 import { Card } from '../../components/Card';
+import { useState } from 'react';
+import { useThemeColor } from '@/hooks/useThemeColor';
 
 export default function HomeScreen() {
-  //const [searchQuery, setSearchQuery] = useState('');
-  //const[filteredData, setFilteredData] = useState(entryData);
-  //const handleSearch = (query: string) => {
-  //setSearchQuery(query);
-  //const filtered = entryData.filter((item) =>
-  //item. )
-  //}
   const entryData = entries
+  const [searchQuery, setSearchQuery] = useState('');
+  const[filteredData, setFilteredData] = useState(entryData);
+  const backgroundColor = useThemeColor({}, 'background');
+  const color = useThemeColor({}, 'text');
+
+  const handleSearch = (query: string) => {
+    setSearchQuery(query);
+    const filtered = entryData.filter((item) =>
+      item.title.toLowerCase().includes(query.toLowerCase())
+   );
+    setFilteredData(filtered);
+  };
+
   return (
     <ScrollView style={styles.container}>
-      <ThemedView style={styles.titleContainer}>
       <ThemedText type="subtitle">Migraine Diary</ThemedText>
+      <TextInput
+        style={[{ backgroundColor, color }, styles.searchInput]}
+        placeholder="Search entry..."
+        value={searchQuery}
+        onChangeText={handleSearch}
+      />
+
       <FlatList
-        data = {entries}
-        keyExtractor={(item) => item.id.toString()}
+        data = {filteredData}
+        keyExtractor={(item) => item.title}
         renderItem={({ item }) => (
           <Card
-            id={item.id}
-            title={item.title}
-            content={item.content}
-            created_at={item.created_at}
-            updated_at={item.updated_at}
+          {...item}
           />
         )}
       />
-      </ThemedView>
     </ScrollView>
   );
 }
 
 
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 14,
+    padding: 16,
   },
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+  searchInput: {
+    marginTop: 10,
+    height: 40,
+    borderColor: '#ccc',
+    borderWidth: 1,
+    borderRadius: 8,
+    paddingHorizontal: 10,
   },
 });

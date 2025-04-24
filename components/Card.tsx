@@ -15,6 +15,14 @@ export const Card: React.FC<CardProps> = ({ id, title, content, created_at, upda
     const backgroundColor = useThemeColor({}, 'background');
     const color = useThemeColor({}, 'text');
     const shadowColor = useThemeColor({}, 'shadowColor');
+    const router = useRouter();
+
+    const handleLinkPress = () => {
+        router.push({
+            pathname: '/(tabs)/(home)/[title]',
+            params: { title: link },
+        })
+    }
 
     return (
         <View style={[
@@ -26,7 +34,13 @@ export const Card: React.FC<CardProps> = ({ id, title, content, created_at, upda
         <Text style={[styles.content, { color }]}>{content}</Text>
         <Text style={[styles.date, { color }]}>{created_at}</Text>
         <Text style={[styles.date, { color }]}>{updated_at}</Text>
-        <TouchableOpacity style={styles.button} onPress={() => console.log(`Link pressed:`)}>
+        <Link
+            className="flex-row items-center-center justify-center"
+            onPress={handleLinkPress}
+            >
+            <LinkText>See Details</LinkText>
+        </Link>
+        <TouchableOpacity style={styles.button} onPress={() => console.log(`Link pressed: ${link}`)}>
             <Text style={styles.link}>See Details</Text>
         </TouchableOpacity>
         </View>
