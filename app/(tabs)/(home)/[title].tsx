@@ -1,7 +1,7 @@
 import { Heading } from "@/components/ui/box";
 import { Box } from "@/components/ui/box/box";
+import { Button } from "@/components/ui/button";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import { Button } from "react-native";
 
 export default function DetailsScreen() {
     const router = useRouter();
