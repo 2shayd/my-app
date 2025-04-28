@@ -68,12 +68,5 @@
         "content": "This is the tenth entry for demonstration purposes.",
         "created_at": "2023-10-10T12:00:00Z",
         "updated_at": "2023-10-10T12:00:00Z"
-    },
-    {
-        "id": 6,
-        "title": "Sixth Entry",
-        "content": "This is the sixth entry for demonstration purposes.",
-        "created_at": "2023-10-06T12:00:00Z",
-        "updated_at": "2023-10-06T12:00:00Z"
     }
 ]

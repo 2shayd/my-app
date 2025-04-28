@@ -1,6 +1,6 @@
-import { Heading } from "@/components/ui/box";
-import { Box } from "@/components/ui/box/box";
-import { Button } from "@/components/ui/button";
+import { Box } from "@/components/ui/box";
+import { Button, ButtonText } from "@/components/ui/button";
+import { Heading } from "@/components/ui/heading";
 import { useLocalSearchParams, useRouter } from "expo-router";
 
 export default function DetailsScreen() {
@@ -10,7 +10,10 @@ export default function DetailsScreen() {
     return (
         <Box className='flex-1 p-4'>
             <Heading size='xl' className='self-center'>Dynamic Page:</Heading>
-            <Button title=
+            <Button onPress={() => router.back()}>
+                <ButtonText>Go Back</ButtonText>
+            </Button>
         </Box>
-    )
+  );
 }
+

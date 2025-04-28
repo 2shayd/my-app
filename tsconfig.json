@@ -1,7 +1,6 @@
 {
-  "extends": "./node_modules/expo/tsconfig.base",
+  "extends": "expo/tsconfig.base",
   "compilerOptions": {
-    "jsx": "react-native",
     "strict": true,
     "paths": {
       "@/*": [
@@ -18,9 +17,5 @@
     ".expo/types/**/*.ts",
     "expo-env.d.ts",
     "nativewind-env.d.ts"
-  ],
-  "tailwindCSS.experimental.classRegex": [
-    ["tva\\((([^()]*|\\([^()]*\\))*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"]
   ]
-
 }

@@ -6,7 +6,6 @@ import { useThemeColor } from '@/hooks/useThemeColor';
 import { useRouter } from 'expo-router';
 import { Link, LinkText } from '@/components/ui/link';
 import { Text } from '@/components/ui/text';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
 // type ICardProps = ViewProps &
 //   VariantProps<typeof cardStyle> & { className?: string };
@@ -48,9 +47,6 @@ export const Card: React.FC<CardProps> = ({ id, title, content, created_at, upda
             >
             <LinkText>See Details</LinkText>
         </Link>
-        <TouchableOpacity style={styles.button} onPress={() => console.log(`Link pressed: ${link}`)}>
-            <Text style={styles.link}>See Details</Text>
-        </TouchableOpacity>
         </View>
 );
 
