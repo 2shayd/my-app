@@ -34,18 +34,33 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 4,
   },
-  title: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    marginBottom: 8,
+  startDate: {
+    fontSize: 14,
+    marginBottom: 4,
+  },
+  startTime: {
+    fontSize: 14,
+    marginBottom: 4,
+  },
+  endDate: {
+    fontSize: 14,
+    marginBottom: 4,
+  },
+  endTime: {
+    fontSize: 14,
+    marginBottom: 4,
+  },
+  scaleRating: {
+    fontSize: 14,
+    marginBottom: 4,
+  },
+  pinned: {
+    fontSize: 14,
+    marginBottom: 4,
   },
   content: {
     fontSize: 14,
     marginBottom: 8,
-  },
-  date: {
-    fontSize: 12,
-    color: 'gray',
   },
   button: {
     marginTop: 12,

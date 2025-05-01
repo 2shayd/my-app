@@ -1,7 +1,7 @@
 import { StyleSheet, ScrollView, FlatList, TextInput } from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
 import entries from '../../../data/entries.json';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useThemeColor } from '@/hooks/useThemeColor';
 import { Card } from '@/components/ui/card';
 
@@ -12,13 +12,23 @@ export default function HomeScreen() {
   const backgroundColor = useThemeColor({}, 'background');
   const color = useThemeColor({}, 'text');
 
+  // need to figure out how to search by date and time with a calandar picker
   const handleSearch = (query: string) => {
     setSearchQuery(query);
     const filtered = entryData.filter((item) =>
-      item.title.toLowerCase().includes(query.toLowerCase())
+      item.startDate.toLowerCase().includes(query.toLowerCase())
    );
     setFilteredData(filtered);
   };
+
+  // add a way to filter by different categories like date, time, scale rating, symptoms, etc.
+  useEffect(() => {
+    const pinned = entryData.filter((item) => item.pinned);
+    if (pinned.length > 0) {
+      console.log('Pinned entries:', pinned);
+      setFilteredData(pinned);
+      }
+    }, []);
 
   return (
     <ScrollView style={styles.container}>
@@ -32,7 +42,7 @@ export default function HomeScreen() {
 
       <FlatList
         data = {filteredData}
-        keyExtractor={(item) => item.title}
+        keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
           <Card
           {...item}

@@ -5,7 +5,7 @@ import { useLocalSearchParams, useRouter } from "expo-router";
 
 export default function DetailsScreen() {
     const router = useRouter();
-    const { title } = useLocalSearchParams<{title: string}>()
+    const { id } = useLocalSearchParams<{ id: string }>()
 
     return (
         <Box className='flex-1 p-4'>

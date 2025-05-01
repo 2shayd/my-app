@@ -12,13 +12,15 @@ import { Text } from '@/components/ui/text';
 
   interface CardProps {
     id: number;
-    title: string;
-    content: string;
-    created_at: string;
-    updated_at: string;
+    startDate: string;
+    startTime: string;
+    endDate?: string;
+    endTime?: string;
+    scaleRating: number;
+    pinned?: boolean;
     }
 
-export const Card: React.FC<CardProps> = ({ id, title, content, created_at, updated_at }) => {
+export const Card: React.FC<CardProps> = ({ id, startDate, startTime, endDate, endTime, scaleRating, pinned }) => {
     const backgroundColor = useThemeColor({}, 'background');
     const color = useThemeColor({}, 'text');
     const shadowColor = useThemeColor({}, 'shadowColor');
@@ -27,7 +29,7 @@ export const Card: React.FC<CardProps> = ({ id, title, content, created_at, upda
     const handleLinkPress = () => {
         router.push({
             pathname: '/(tabs)/(home)/[title]',
-            params: { title: Link },
+            params: { id : Link },
         })
     }
 
@@ -37,10 +39,13 @@ export const Card: React.FC<CardProps> = ({ id, title, content, created_at, upda
             styles.card,
         ]}>
         <Text style={[styles.id, { color }]}>{id}</Text>
-        <Text style={[styles.title, { color }]}>{title}</Text>
-        <Text style={[styles.content, { color }]}>{content}</Text>
-        <Text style={[styles.date, { color }]}>{created_at}</Text>
-        <Text style={[styles.date, { color }]}>{updated_at}</Text>
+        <Text style={[styles.startDate, { color }]}>{startDate}</Text>
+        <Text style={[styles.startTime, { color }]}>{startTime}</Text>
+        <Text style={[styles.endDate, { color }]}>{endDate}</Text>
+        <Text style={[styles.endTime, { color }]}>{endTime}</Text>
+        <Text style={[styles.scaleRating, { color }]}>{scaleRating}</Text>
+        <Text style={[styles.pinned, { color }]}>{pinned ? 'Pinned' : 'Not Pinned'}</Text>
+
         <Link
             className="flex-row items-center-center justify-center"
             onPress={handleLinkPress}
