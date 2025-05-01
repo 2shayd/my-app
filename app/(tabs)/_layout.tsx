@@ -1,18 +1,24 @@
-import { Tabs } from 'expo-router';
-import React from 'react';
+import { Tabs, useRouter } from 'expo-router';
+import React, { useContext } from 'react';
 import { Platform } from 'react-native';
-
 import { HapticTab } from '@/components/HapticTab';
 import { IconSymbol } from '@/components/ui/IconSymbol';
 import TabBarBackground from '@/components/ui/TabBarBackground';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
+import { ThemeContext } from '../_layout';
+import { Box } from '@/components/ui/box';
+// import { Fab, FabIcon } from '@/components/ui/fab';
+import { EditIcon } from '@/components/ui/icon';
 import { Button } from '@/components/ui/button';
 
 export default function TabLayout() {
+  const router = useRouter();
   const colorScheme = useColorScheme();
+  const { colorMode } = useContext(ThemeContext);
 
   return (
+    <Box className="flex-1">
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
@@ -45,5 +51,14 @@ export default function TabLayout() {
         }}
       />
     </Tabs>
+    {/* <Fab
+        size='lg'
+        className='bottom-32 dark:bg-zinc-700'
+        onPress={() => router.navigate('/add-entry')}
+      >
+        <FabIcon as={EditIcon} color="white"/>
+      </Fab> */}
+
+    </Box>
   );
 }
