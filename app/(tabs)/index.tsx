@@ -15,7 +15,7 @@ export default function HomeScreen() {
   const handleSearch = (query: string) => {
     setSearchQuery(query);
     const filtered = entryData.filter((item) =>
-      item.title.toLowerCase().includes(query.toLowerCase())
+      item.startDate.toLowerCase().includes(query.toLowerCase())
    );
     setFilteredData(filtered);
   };
@@ -32,7 +32,7 @@ export default function HomeScreen() {
 
       <FlatList
         data = {filteredData}
-        keyExtractor={(item) => item.title}
+        keyExtractor={(item) => item.startDate}
         renderItem={({ item }) => (
           <Card
           {...item}

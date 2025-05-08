@@ -15,8 +15,8 @@ const entrySchema = Yup.object().shape({
 });
 
 const AddEntry = () => {
-    const navigation = useNavigation(); //add navigation where it needs to be
-    const { addEntry } = useEntryContext(); // this too
+    const navigation = useNavigation(); 
+    const { addEntry } = useEntryContext(); 
 
     return (
         <Box className="flex-1 p-4 dark:bg-gray-900 dark:text-white">
