@@ -1,7 +1,7 @@
 import { StyleSheet, ScrollView, FlatList, TextInput } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 import entries from "../../../data/entries.json";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useThemeColor } from "@/hooks/useThemeColor";
 import { Card } from "@/components/ui/card";
 import { Box } from "@/components/ui/box";
@@ -14,6 +14,7 @@ export default function HomeScreen() {
   const backgroundColor = useThemeColor({}, "background");
   const color = useThemeColor({}, "text");
 
+  // need to figure out how to search by date and time with a calandar picker
   const handleSearch = (query: string) => {
     setSearchQuery(query);
     const filtered = entryData.filter((item) =>
@@ -21,6 +22,15 @@ export default function HomeScreen() {
     );
     setFilteredData(filtered);
   };
+
+  // add a way to filter by different categories like date, time, scale rating, symptoms, etc.
+  useEffect(() => {
+    const pinned = entryData.filter((item) => item.pinned);
+    if (pinned.length > 0) {
+      console.log("Pinned entries:", pinned);
+      setFilteredData(pinned);
+    }
+  }, []);
 
   return (
     <Box className="flex-1 p-4 dark:bg-zinc-700">
