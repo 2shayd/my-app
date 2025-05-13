@@ -6,16 +6,17 @@ import { IconSymbol } from '@/components/ui/IconSymbol';
 import TabBarBackground from '@/components/ui/TabBarBackground';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
-import { ThemeContext } from '../_layout';
+
 import { Box } from '@/components/ui/box';
 // import { Fab, FabIcon } from '@/components/ui/fab';
 import { EditIcon } from '@/components/ui/icon';
 import { Button } from '@/components/ui/button';
+import { ThemeContext } from '@react-navigation/native';
 
 export default function TabLayout() {
   const router = useRouter();
   const colorScheme = useColorScheme();
-  const { colorMode } = useContext(ThemeContext);
+  useContext(ThemeContext);
 
   return (
     <Box className="flex-1">

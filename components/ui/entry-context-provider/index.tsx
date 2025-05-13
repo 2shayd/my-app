@@ -28,7 +28,7 @@ const EntryContext = createContext<EntryContextType | undefined>(undefined);
 
 export const EntryProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 // need to be completed --->
-    const {data, isFetching} = useGetEntries(); 
+    // const {data, isFetching} = useGetEntries(); 
  // <-- need to be completed   
     const [entries, setEntries] = useState<Entry[]>(entryData as Entry[]);
 
@@ -52,14 +52,14 @@ export const EntryProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         );
     };
 //need to be completed --->
-    useEffect(() => {
-        if (data && !isFetching) {
-            console.log('Fetched entries:', data);
-            setEntries(data as Entry[]);
-        }, [data, isFetching]);
-    })
+//     useEffect(() => {
+//         if (data && !isFetching) {
+//             console.log('Fetched entries:', data);
+//             setEntries(data as Entry[]);
+//         }, [data, isFetching]);
+//     })
     return (
-        <EntryContext.Provider value={{ entries, addEntry, updateEntry, pinEntry }}>
+        <EntryContext.Provider value={{ isLoading: false, entries, addEntry, updateEntry, pinEntry }}>
             {children}
         </EntryContext.Provider>
     );

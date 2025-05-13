@@ -1,14 +1,14 @@
-import { supabase } from '../app/utils/supabase';
-import { useQuery } from "@tanstack/react-query";
+// import { supabase } from '../app/utils/supabase';
+// import { useQuery } from "@tanstack/react-query";
 
-export const useGetEntries = () => {
-    return useQuery({
-        // need to be completed --->
-        queryKey: ['entries'],
-        queryFn: async () => {
+// export const useGetEntries = () => {
+//     return useQuery({
+//         // need to be completed --->
+//         queryKey: ['entries'],
+//         queryFn: async () => {
             
-        }
+//         }
 
-        // <--- need to be completed
-    })
-}
+//         // <--- need to be completed
+//     })
+// }
