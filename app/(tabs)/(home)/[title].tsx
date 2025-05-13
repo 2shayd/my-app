@@ -5,8 +5,6 @@ import entryData from "@/data/entries.json";
 import { VStack } from "@/components/ui/vstack"; 
 import { Text } from "@/components/ui/text";
 
-
-
 export default function DetailsScreen() {
     const { id } = useLocalSearchParams<{ id: string }>();
     const entry = entryData.find((entry) => entry.id.toString() === id);
@@ -33,4 +31,3 @@ export default function DetailsScreen() {
         </Box>
   );
 }
-

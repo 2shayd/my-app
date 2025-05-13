@@ -1,31 +1,29 @@
 [
-    {
-        "id": 1,
-        "startDate": "2023-10-01",
-        "startTime": "09:00",
-        "endDate": "2023-10-01",
-        "endTime": "10:00",
-        "scaleRating": 5,
-        "pinned": false
-    }
-    ,
-    {
-        "id": 2,
-        "startDate": "2023-10-02",
-        "startTime": "10:00",
-        "endDate": "2023-10-02",
-        "endTime": "11:00",
-        "scaleRating": 10,
-        "pinned": true
-    },
-    {
-        "id": 3,
-        "startDate": "2023-10-03",
-        "startTime": "11:00",
-        "endDate": "2023-10-03",
-        "endTime": "12:00",
-        "scaleRating": 3,
-        "pinned": false
-    }
-
+  {
+    "id": 1,
+    "startDate": "2023-10-01",
+    "startTime": "09:00",
+    "endDate": "2023-10-01",
+    "endTime": "10:00",
+    "scaleRating": 5,
+    "pinned": false
+  },
+  {
+    "id": 2,
+    "startDate": "2023-10-02",
+    "startTime": "10:00",
+    "endDate": "2023-10-02",
+    "endTime": "11:00",
+    "scaleRating": 10,
+    "pinned": true
+  },
+  {
+    "id": 3,
+    "startDate": "2023-10-03",
+    "startTime": "11:00",
+    "endDate": "2023-10-03",
+    "endTime": "12:00",
+    "scaleRating": 3,
+    "pinned": false
+  }
 ]

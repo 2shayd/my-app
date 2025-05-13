@@ -1,4 +1,15 @@
-import { SplashScreen, Stack } from "expo-router";
+import {
+  DarkTheme,
+  DefaultTheme,
+  ThemeProvider,
+} from "@react-navigation/native";
+import "@/global.css";
+import { Stack } from "expo-router";
+import * as SplashScreen from "expo-splash-screen";
+import "react-native-reanimated";
+
+import { useColorScheme } from "@/hooks/useColorScheme";
+
 import { createContext, useEffect, useState } from "react";
 import { GluestackUIProvider, ModeType } from "@/components/ui/gluestack-ui-provider";
 import { useFonts } from "expo-font";
@@ -17,11 +28,12 @@ export const ThemeContext = createContext<ThemeContextType>({
 });
 
 export default function RootLayout() {
+  const colorScheme = useColorScheme();
+  const [loaded] = useFonts({
+    SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
+  });
     const [colorMode, setColorMode] = useState<ModeType>("light");
 
-    const [loaded] = useFonts({
-        SpaceMono: require("@/assets/fonts/SpaceMono-Regular.ttf"),
-    });
 
     useEffect(() => {
         if (loaded) {
