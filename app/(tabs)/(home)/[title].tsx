@@ -1,19 +1,29 @@
 import { Box } from "@/components/ui/box";
-import { Button, ButtonText } from "@/components/ui/button";
 import { Heading } from "@/components/ui/heading";
-import { useLocalSearchParams, useRouter } from "expo-router";
+import { Stack, useLocalSearchParams } from "expo-router";
+import entryData from "@/data/entries.json";
+import { VStack } from "@/components/ui/vstack";
+import { Text } from "@/components/ui/text";
 
 export default function DetailsScreen() {
-    const router = useRouter();
-    const { title } = useLocalSearchParams<{title: string}>()
+  const { id } = useLocalSearchParams<{ id: string }>();
+  const entry = entryData.find((entry) => entry.id.toString() === id);
+  const { id: entryId, startDate, startTime, scaleRating } = entry || {};
 
-    return (
-        <Box className='flex-1 p-4'>
-            <Heading size='xl' className='self-center'>Dynamic Page:</Heading>
-            <Button onPress={() => router.back()}>
-                <ButtonText>Go Back</ButtonText>
-            </Button>
-        </Box>
+  return (
+    <Box className="flex-1 p-4">
+      <Stack.Screen
+        options={{
+          title: `Entry ${entryId}`,
+        }}
+      />
+      <Heading size="xl" className="self-center">
+        Entry Details:
+      </Heading>
+      <VStack space="md" className="mr-auto mt-4">
+        <Text size="lg">Start Date: {startDate}</Text>
+        <Text size="lg">Start Time: {startTime}</Text>
+      </VStack>
+    </Box>
   );
 }
-
