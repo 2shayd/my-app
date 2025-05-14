@@ -7,15 +7,16 @@ import "@/global.css";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import "react-native-reanimated";
-
-import { useColorScheme } from "@/hooks/useColorScheme";
-
 import { createContext, useEffect, useState } from "react";
 import { GluestackUIProvider, ModeType } from "@/components/ui/gluestack-ui-provider";
 import { useFonts } from "expo-font";
 import { EntryProvider } from "@/components/ui/entry-context-provider";
-// import { supabase } from "../app/utils/supabase";
+import { supabase } from "@/utils/supabase";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { StatusBar } from "react-native";
 
+//prevent splash screen from auto hiding before asset is loaded
+SplashScreen.preventAutoHideAsync();
 
 type ThemeContextType = {
     colorMode?: ModeType;
@@ -27,12 +28,15 @@ export const ThemeContext = createContext<ThemeContextType>({
     toggleColorMode: () => {},
 });
 
+const queryClient = new QueryClient();
+
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
-  const [loaded] = useFonts({
-    SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
-  });
     const [colorMode, setColorMode] = useState<ModeType>("light");
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    
+    const [loaded] = useFonts({
+        SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
+    });
 
 
     useEffect(() => {
@@ -41,57 +45,69 @@ export default function RootLayout() {
         }
     }, [loaded]);
 
-        //handle initial supabase auth
-    // need to be completed --->
-        useEffect(() => {
-//             if (isAuthenticated) {
-//                 return;
-//             }
-//             const autoSign = async () => {
-//                 const { data, error } = await supabase.auth.getSession();
-//                 if (error) {
-//                     console.error('Error getting session:', error);
-//                 } else if (data.session) {
-//                     setIsAuthenticated(true);
-//                     console.log('User is already signed in:', data.session.user);
-//                 } else {
-//                     signIn();
-//                 }
-//             };
 
-//             const {data, error} = await supabase.auth.signInWithPassword({
-//                 email: 'test@dev.com',
-//                 password: 'testpassword',
-//             });
-//             if (error) {
-//                 console.error('Error signing in:', error);
-//             }else {
-//                 setIsAuthenticated(true);
-//                 console.log('User signed in:', data);
-//             }
-//         }
+
+    //handle initial supabase auth
+    useEffect(() => {
+        const autoSignin = async () => {
+            if (isAuthenticated) {
+                console.log('User is already signed in');
+                return;
+            }
+
+        const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
+            if (sessionError) {
+                console.error('Error getting session:', sessionError);
+            } else if (sessionData.session) {
+                setIsAuthenticated(true);
+                console.log('User is already signed in:', sessionData.session.user);
+            } else {
+                signIn();
+            }
+            
+        const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
+            email: 'test@dev.com',
+            password: 'testpassword',
+        });
+        if (signInError) {
+            console.error('Error signing in:', signInError);
+        } else {
+            setIsAuthenticated(true);
+            console.log('User signed in:', signInData);
+        }
+    };
     
-        // autoSign();
-    }, [])
-    // <--- need to be completed
+
+
+
+    autoSignin();
+}, [isAuthenticated])
 
     if (!loaded) {
         return null;
     }
+
     const toggleColorMode = async () => {
         setColorMode((prev) => (prev === "light" ? "dark" : "light"));
     };
-   
-        return (
-            <GluestackUIProvider mode={colorMode}>
-                <ThemeContext.Provider value={{ colorMode, toggleColorMode }}>
-                    <EntryProvider>
-                        <Stack>
-                            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-                            <Stack.Screen name="+not-found" options={{ headerShown: false }} />
-                        </Stack>
-0                    </EntryProvider>
-                </ThemeContext.Provider>
-            </GluestackUIProvider>
-        );
-    }
+
+    return (
+<QueryClientProvider client={queryClient}>
+<GluestackUIProvider mode={colorMode}>
+    <ThemeContext.Provider value={{ colorMode, toggleColorMode }}>
+        <EntryProvider>
+            <Stack>
+                <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+                <Stack.Screen name="+not-found" options={{ headerShown: false }} />
+            </Stack>
+        </EntryProvider>
+    </ThemeContext.Provider>
+</GluestackUIProvider>
+</QueryClientProvider>
+);
+}
+
+function signIn() {
+    throw new Error("Function not implemented.");
+}
+

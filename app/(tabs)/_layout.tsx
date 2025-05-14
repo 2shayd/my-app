@@ -6,34 +6,41 @@ import { IconSymbol } from '@/components/ui/IconSymbol';
 import TabBarBackground from '@/components/ui/TabBarBackground';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
-
 import { Box } from '@/components/ui/box';
-// import { Fab, FabIcon } from '@/components/ui/fab';
+import { Fab, FabIcon } from '@/components/ui/fab';
 import { EditIcon } from '@/components/ui/icon';
 import { Button } from '@/components/ui/button';
 import { ThemeContext } from '@react-navigation/native';
+import AntDesign from '@expo/vector-icons/AntDesign';
+
 
 export default function TabLayout() {
   const router = useRouter();
   const colorScheme = useColorScheme();
-  useContext(ThemeContext);
+  const themeContext = useContext(ThemeContext);
+  const colorMode = colorScheme ?? 'light';
+
 
   return (
     <Box className="flex-1">
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        headerShown: true,
+        headerShown: false,
         tabBarButton: HapticTab,
         tabBarBackground: TabBarBackground,
         tabBarStyle: Platform.select({
           ios: {
             // Use a transparent background on iOS to show the blur effect
             position: 'absolute',
+            backgroundColor: colorMode === 'light' ? '#fff' : '#27272a',
           },
-          default: {},
+          default: {
+            backgroundColor:colorMode === 'light' ? '#fff' : '#27272a',
+          },
         }),
-      }}>
+      }}
+      >
       <Tabs.Screen
         name="(home)"
         options={{
@@ -45,20 +52,20 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="pinned"
         options={{
-          title: 'Explore',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
+          title: 'Pinned',
+          tabBarIcon: ({ color }) => <AntDesign name="star" size={24} color="black" />,
         }}
       />
     </Tabs>
-    {/* <Fab
+    <Fab
         size='lg'
         className='bottom-32 dark:bg-zinc-700'
         onPress={() => router.navigate('/add-entry')}
       >
         <FabIcon as={EditIcon} color="white"/>
-      </Fab> */}
+      </Fab>
 
     </Box>
   );

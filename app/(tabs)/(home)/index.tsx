@@ -3,34 +3,38 @@ import { ThemedText } from "@/components/ThemedText";
 import entries from "../../../data/entries.json";
 import { useEffect, useState } from "react";
 import { useThemeColor } from "@/hooks/useThemeColor";
-import { Card } from "@/components/ui/card";
 import { Box } from "@/components/ui/box";
 import EntryCard from "@/components/EntryCard";
+import { useEntryContext } from "@/components/ui/entry-context-provider";
 
 export default function HomeScreen() {
-  const entryData = entries;
+  const { entries } = useEntryContext()
+  // const entryData = entries;
   const [searchQuery, setSearchQuery] = useState("");
-  const [filteredData, setFilteredData] = useState(entryData);
+  const [filteredData, setFilteredData] = useState(entries);
   const backgroundColor = useThemeColor({}, "background");
   const color = useThemeColor({}, "text");
 
   // need to figure out how to search by date and time with a calandar picker
   const handleSearch = (query: string) => {
     setSearchQuery(query);
-    const filtered = entryData.filter((item) =>
-      item.startDate.toLowerCase().includes(query.toLowerCase()),
+    const filtered = entries.filter((item) =>
+      item.id.toString().includes(query.toLowerCase()),
     );
     setFilteredData(filtered);
   };
 
   // add a way to filter by different categories like date, time, scale rating, symptoms, etc.
   useEffect(() => {
-    const pinned = entryData.filter((item) => item.pinned);
-    if (pinned.length > 0) {
-      console.log("Pinned entries:", pinned);
-      setFilteredData(pinned);
+    if (searchQuery === "") {
+      setFilteredData(entries);
+    } else {
+      const filtered = entries.filter((item) =>
+        item.id.toString().includes(searchQuery.toLowerCase()),
+      );
+      setFilteredData(filtered);
     }
-  }, []);
+  }, [entries]);
 
   return (
     <Box className="flex-1 p-4 dark:bg-zinc-700">

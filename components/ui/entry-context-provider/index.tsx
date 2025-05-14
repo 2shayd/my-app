@@ -1,7 +1,8 @@
-import { createContext, useContext, useState } from "react";
-import { useRouter } from "expo-router";
+import { createContext, useContext, useState, useEffect } from "react";
 import entryData from "@/data/entries.json";
 import React from "react";
+import { useAddEntry } from "@/hooks/useAddEntry";
+
 
 export type Entry = {
   id: number;
@@ -10,7 +11,7 @@ export type Entry = {
   endDate?: string;
   endTime?: string;
   scaleRating: number;
-  pinned?: boolean;
+  isPinned?: boolean;
 };
 
 //cmd+shift+L to select all lines
@@ -30,7 +31,8 @@ export const EntryProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   // need to be completed --->
-  // const {data, isFetching} = useGetEntries();
+  // const {data, isFetching} = useGetEntry();
+
   // <-- need to be completed
   const [entries, setEntries] = useState<Entry[]>(entryData as Entry[]);
 
@@ -49,7 +51,7 @@ export const EntryProvider: React.FC<{ children: React.ReactNode }> = ({
   const pinEntry = (id: number) => {
     setEntries((prev) =>
       prev.map((entry) =>
-        entry.id === id ? { ...entry, pinned: !entry.pinned } : entry,
+        entry.id === id ? { ...entry, isPinned: !entry.isPinned } : entry
       ),
     );
   };
@@ -78,6 +80,6 @@ export const useEntryContext = () => {
   return context;
 };
 
-//npm install formik yup into command line!!
+
 // add a floating action button
-// fix up OldCard.tsx to use properly use the card component
+

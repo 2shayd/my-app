@@ -7,6 +7,7 @@ import { Box } from "@/components/ui/box";
 import { useNavigation } from "expo-router";
 import { Button, ButtonText } from "@/components/ui/button";
 import { HStack } from "@/components/ui/hstack";
+import { B } from "@expo/html-elements";
 
 const entrySchema = Yup.object().shape({
   startDate: Yup.string().required("Start date is required"),
