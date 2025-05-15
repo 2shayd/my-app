@@ -12,7 +12,12 @@ import { B } from "@expo/html-elements";
 const entrySchema = Yup.object().shape({
   startDate: Yup.string().required("Start date is required"),
   startTime: Yup.string().required("Start time is required"),
-  scaleRating: Yup.number().min(0).max(10).required("Scale rating is required"),
+  scaleRating: Yup.number()
+    .transform((value, originalValue) => originalValue === "" ? undefined : value)
+    .typeError("Scale rating must be a number")
+    .min(0, "Rating must be at least 0")
+    .max(10, "Rating cannot exceed 10")
+    .required("Scale rating is required"),
 });
 
 const AddEntry = () => {
@@ -27,7 +32,7 @@ const AddEntry = () => {
           startTime: "",
           endDate: "",
           endTime: "",
-          scaleRating: 0,
+          scaleRating: "",
           // symptoms: [],
         }}
         validationSchema={entrySchema}
@@ -39,7 +44,7 @@ const AddEntry = () => {
             startTime: values.startTime,
             endDate: values.endDate,
             endTime: values.endTime,
-            scaleRating: values.scaleRating,
+            scaleRating: Number(values.scaleRating),
             // symptoms: values.symptoms,
           });
 
@@ -81,6 +86,86 @@ const AddEntry = () => {
                 )}
               </Box>
             </Box>
+            <Box>
+              <Input
+                variant="outline"
+                size="md"
+                className="bg-white dark:bg-zinc-900 mt-2"
+              >
+                <InputField
+                  onChangeText={handleChange("startTime")}
+                  onBlur={handleBlur("startTime")}
+                  value={values.startTime}
+                  placeholder="Start Time"
+                />
+              </Input>
+              {errors.startTime && touched.startTime && (
+                <Text size="sm" className="text-red-500">
+                  {errors.startTime}
+                </Text>
+              )}
+            </Box>
+            <Box>
+              <Input
+                variant="outline"
+                size="md"
+                className="bg-white dark:bg-zinc-900 mt-2"
+              >
+                <InputField
+                  onChangeText={handleChange("endDate")}
+                  onBlur={handleBlur("endDate")}
+                  value={values?.endDate}
+                  placeholder="End Date"
+                />
+              </Input>
+              {errors.endDate && touched.endDate && (
+                <Text size="sm" className="text-red-500">
+                  {errors.endDate}
+                </Text>
+              )}
+            </Box>
+            <Box>
+              <Input
+                variant="outline"
+                size="md"
+                className="bg-white dark:bg-zinc-900 mt-2"
+              >
+                <InputField
+                  onChangeText={handleChange("endTime")}
+                  onBlur={handleBlur("endTime")}
+                  value={values?.endTime}
+                  placeholder="End Time"
+                />
+              </Input>
+              {errors.endTime && touched.endTime && (
+                <Text size="sm" className="text-red-500">
+                  {errors.endTime}
+                </Text>
+              )}
+            </Box>
+            <Box>
+              <Input
+                variant="outline"
+                size="md"
+                className="bg-white dark:bg-zinc-900 mt-2"
+              >
+                <InputField
+                  onChangeText={handleChange("scaleRating")}
+                  onBlur={handleBlur("scaleRating")}
+                  value={values.scaleRating.toString()}
+                  placeholder="Pain Rating (0-10)"
+                  keyboardType="numeric"
+                />
+              </Input>
+              {errors.scaleRating && touched.scaleRating && (
+                <Text size="sm" className="text-red-500">
+                  {errors.scaleRating}
+                </Text>
+              )}
+            </Box>
+            <Button onPress={handleSubmit as any} className="mt-6" variant="solid">
+              <ButtonText>Save Entry</ButtonText>
+              </Button>
           </>
         )}
       </Formik>
@@ -89,3 +174,4 @@ const AddEntry = () => {
 };
 
 export default AddEntry;
+

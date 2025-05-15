@@ -5,25 +5,47 @@ import { Text } from '@/components/ui/text';
 import { HStack } from '@/components/ui/hstack';
 import React from 'react';
 
-const initialState = { pinned: [] as string[] };
+type Entry = {
+    value: string;
+    isPinned: boolean;
+};
+
+type State = {
+    pinned: string[];
+    entries: Entry[];
+};
+
+type Action =
+    | { type: 'add'; payload?: string }
+    | { type: 'togglePin'; index: number };
+
+const initialState: State = { pinned: [], entries: [] };
 
 function pinnedReducer(
-    state: { pinned: string[] },
-    action: { type: 'add'; payload?: string }
-) {
+    state: State,
+    action: Action
+): State {
     switch (action.type) {
         case 'add':
-            if (action.payload && !state.pinned.includes(action.payload)) {
-            return { pinned: [...state.pinned, action.payload] };
-            }
+            return {
+                ...state,
+                pinned: action.payload ? [...state.pinned, action.payload] : state.pinned,
+            };
+        case 'togglePin':
+            return {
+                ...state,
+                entries: state.entries.map((entry, idx) =>
+                    idx === action.index ? { ...entry, isPinned: !entry.isPinned } : entry
+                ),
+            };
         default:
-            throw new Error('Unknown action type');
+            return state;
     }
 }
 
 export default function Pinned() {
     const [state, dispatch] = React.useReducer(pinnedReducer, initialState);
-    const sampleItems = ['React', 'Expo', 'NativeWind', 'Gluestack'];
+    const [entry, setEntry] = React.useState<string>('');
 return (
     <Box className="flex-1 justify-center items-center bg-light dark:bg-dark p-4">
         <VStack className="items-center space-y-4">
@@ -32,7 +54,7 @@ return (
             </Text>
         
 {/* //display the items */}
-    <Box className="w-full p-4 bg-gray-100 dark:bg-gray-800 rounded-lg">
+    <Box className="w-full p-4 bg-gray-100 dark:bg-gray-800 rounded-lg justify-center items-center">
         <Text className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-2">
             Pinned Entries:
         </Text>

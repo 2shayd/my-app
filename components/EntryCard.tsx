@@ -16,7 +16,7 @@ const EntryCard: React.FC<Entry> = ({
   endDate,
   endTime,
   scaleRating,
-  pinned,
+  isPinned,
 }) => {
   const { pinEntry } = useEntryContext();
   const router = useRouter();
@@ -37,8 +37,8 @@ const EntryCard: React.FC<Entry> = ({
             as={StarIcon}
             size="xl"
             className={`${
-              pinned ? "text-blue-500" : "text-gray-500"
-            } abosulte right-4 top-4`}
+              isPinned? "text-blue-500" : "text-gray-500"
+            } flex-row items-center justify-center top-4`}
           />
         </Pressable>
         <Text className="text-md my-1 dark:text-white">{startDate}</Text>

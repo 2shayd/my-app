@@ -2,6 +2,8 @@ import { createContext, useContext, useState, useEffect } from "react";
 import entryData from "@/data/entries.json";
 import React from "react";
 import { useAddEntry } from "@/hooks/useAddEntry";
+import { useGetEntry } from "@/hooks/useGetEntry";
+import { useUpdateEntry } from "@/hooks/useUpdateEntry";
 
 
 export type Entry = {
@@ -31,46 +33,54 @@ export const EntryProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   // need to be completed --->
-  // const {data, isFetching} = useGetEntry();
+  const {data, isFetching} = useGetEntry();
+  const addEntryMutation = useAddEntry();
+  const updateEntryMutation = useUpdateEntry();
 
   // <-- need to be completed
   const [entries, setEntries] = useState<Entry[]>(entryData as Entry[]);
 
-  const addEntry = (entry: Entry) => {
-    setEntries((prev) => [...prev, entry]);
+  const addEntry = async (entry: SupabaseNewEntry) => {
+    addEntryMutation.mutate(entry);
   };
 
   const updateEntry = (id: number, updatedEntry: Partial<Entry>) => {
-    setEntries((prev) =>
-      prev.map((entry) =>
-        entry.id === id ? { ...entry, ...updatedEntry } : entry,
-      ),
-    );
+    updateEntryMutation.mutate(updatedEntry);
   };
 
   const pinEntry = (id: number) => {
-    setEntries((prev) =>
-      prev.map((entry) =>
+    setEntries((prevEntries) =>
+      prevEntries.map((entry) =>
         entry.id === id ? { ...entry, isPinned: !entry.isPinned } : entry
-      ),
+      )
     );
   };
-  //need to be completed --->
-  //     useEffect(() => {
-  //         if (data && !isFetching) {
-  //             console.log('Fetched entries:', data);
-  //             setEntries(data as Entry[]);
-  //         }, [data, isFetching]);
-  //     })
+
+      useEffect(() => {
+          if (data && !isFetching) {
+              console.log('Fetched entries:', data);
+              setEntries(data as Entry[]);
+          }
+          if (isFetching) {
+              console.log("fetching data..");
+          }
+          }, [data, isFetching]);
+
   return (
     <EntryContext.Provider
-      value={{ isLoading: false, entries, addEntry, updateEntry, pinEntry }}
-    >
+      value={{
+        isLoading: isFetching || addEntryMutation.isPending || updateEntryMutation.isPending,
+        entries,
+        addEntry,
+        updateEntry,
+        pinEntry 
+
+      }}>
       {children}
     </EntryContext.Provider>
   );
 };
-// <--- need to be completed
+
 
 export const useEntryContext = () => {
   const context = useContext(EntryContext);
@@ -79,7 +89,4 @@ export const useEntryContext = () => {
   }
   return context;
 };
-
-
-// add a floating action button
 
